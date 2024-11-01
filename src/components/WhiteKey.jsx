@@ -1,10 +1,17 @@
 import { useState } from "react";
 
-const WhiteKey = ({ note }) => {
+const WhiteKey = ({ note, octive }) => {
   const [toggleClick, setToggleClick] = useState(false);
+
+  const audio = new Audio(`/sounds/notes/${note}${octive}.mp3`);
 
   const handleButtonClick = () => {
     setToggleClick(!toggleClick);
+
+    if (!toggleClick) {
+      audio.currentTime = 0;
+      audio.play();
+    }
   };
 
   const clicked = "bg-lime-100";
