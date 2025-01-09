@@ -14,7 +14,7 @@ const BlackKey = ({ note, octive, isClicked, onClick }) => {
     >
       <div
         className={`flex justify-center items-end bg-black lg:h-[18vh] h-[10vh] w-[4vw] lg:w-[3vw] cursor-pointer
-          ${!isClicked ? "hover:bg-gray-800" : "bg-opacity-20"}`}
+          ${isClicked ? "bg-opacity-20" : "hover:bg-gray-800"}`}
       >
         <div className="lg:mb-6 mb-4 text-xl text-gray-200">
           {note.replace("s", "#")}

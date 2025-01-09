@@ -1,33 +1,51 @@
 import { useEffect, useState } from "react";
-import { notes } from "../../public/note-names/note-names";
+import { notes } from "../note-names/note-names";
+import { detectChord } from "../chords/chords";
 import BlackKey from "./BlackKey";
 import WhiteKey from "./WhiteKey";
 
 const Keyboard = () => {
   const [clickedKeys, setClickedKeys] = useState({});
+  const [chord, setChord] = useState("");
 
   const handleKeyClick = (note) => {
-    setClickedKeys((prevKeys) => ({
-      ...prevKeys,
-      [note]: !prevKeys[note],
-    }));
+    setClickedKeys((prevKeys) => {
+      const updatedKeys = { ...prevKeys, [note]: !prevKeys[note] };
+
+      const activeNotes = Object.keys(updatedKeys).filter(
+        (key) => updatedKeys[key]
+      );
+
+      const generatedChord = detectChord(activeNotes);
+      setChord(generatedChord);
+
+      return updatedKeys;
+    });
   };
 
   useEffect(() => {
-    window.addEventListener("contextmenu", handleRightClickAnywhere);
+    window.addEventListener("keydown", handleRPress);
 
     return () => {
-      window.removeEventListener("contextmenu", handleRightClickAnywhere);
+      window.removeEventListener("keydown", handleRPress);
     };
   }, []);
 
-  const handleRightClickAnywhere = (event) => {
-    event.preventDefault();
+  const handleRPress = (event) => {
+    if (event.key === "r") {
+      event.preventDefault();
+      setClickedKeys({});
+      setChord("");
+    }
+  };
+
+  const handleReset = () => {
     setClickedKeys({});
+    setChord("");
   };
 
   return (
-    <>
+    <div className="flex flex-col flex-center items-center">
       <div className="flex border border-gray-400">
         {notes.map((note) => (
           <div key={note.WhiteNote + "-set1"} className="relative inline-block">
@@ -74,8 +92,13 @@ const Keyboard = () => {
           </div>
         ))}
       </div>
-      <div></div>
-    </>
+      <div className="flex w-full mt-5 mb-10" onClick={handleReset}>
+        <button className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700">
+          Reset
+        </button>
+      </div>
+      <div>{chord}</div>
+    </div>
   );
 };
 
