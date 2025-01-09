@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { notes } from "../note-names/note-names";
+import {
+  notes,
+  noteNames,
+  chordTypes,
+  extensions,
+} from "../note-names/note-names";
 import { detectChord } from "../chords/chords";
 import BlackKey from "./BlackKey";
 import WhiteKey from "./WhiteKey";
@@ -7,6 +12,11 @@ import WhiteKey from "./WhiteKey";
 const Keyboard = () => {
   const [clickedKeys, setClickedKeys] = useState({});
   const [chord, setChord] = useState("");
+  const [selectedChord, setSelectedChord] = useState({
+    noteName: "",
+    chordType: "",
+    extension: "",
+  });
 
   const handleKeyClick = (note) => {
     setClickedKeys((prevKeys) => {
@@ -36,12 +46,37 @@ const Keyboard = () => {
       event.preventDefault();
       setClickedKeys({});
       setChord("");
+      setSelectedChord({
+        noteName: "",
+        chordType: "",
+        extension: "",
+      });
     }
   };
 
   const handleReset = () => {
     setClickedKeys({});
     setChord("");
+    setSelectedChord({
+      noteName: "",
+      chordType: "",
+      extension: "",
+    });
+  };
+
+  const handleNoteSelect = (event) => {
+    const noteName = event.target.value;
+    setSelectedChord((prevChord) => ({ ...prevChord, noteName }));
+  };
+
+  const handleChordTypeSelect = (event) => {
+    const chordType = event.target.value;
+    setSelectedChord((prevChord) => ({ ...prevChord, chordType }));
+  };
+
+  const handleExtensionSelect = (event) => {
+    const extension = event.target.value;
+    setSelectedChord((prevChord) => ({ ...prevChord, extension }));
   };
 
   return (
@@ -97,7 +132,63 @@ const Keyboard = () => {
           Reset
         </button>
       </div>
-      <div>{chord}</div>
+      <div className="mb-5">{chord}</div>
+      <div className="flex items-center space-x-5">
+        <div>
+          <label htmlFor="note-select" className="mr-2">
+            Note:
+          </label>
+          <select
+            id="note-select"
+            value={selectedChord.noteName}
+            onChange={handleNoteSelect}
+            className="px-2 py-1 border border-gray-400 rounded-md"
+          >
+            <option value={""}></option>
+            {noteNames.map((noteName) => (
+              <option key={noteName} value={noteName}>
+                {noteName.replace("s", "#")}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="chord-type" className="mr-2">
+            Chord type:
+          </label>
+          <select
+            id="chord-type"
+            value={selectedChord.chordType}
+            onChange={handleChordTypeSelect}
+            className="px-2 py-1 border border-gray-400 rounded-md"
+          >
+            <option value=""></option>
+            {chordTypes.map((chordType) => (
+              <option key={chordType} value={chordType}>
+                {chordType}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="extension" className="mr-2">
+            Extension:
+          </label>
+          <select
+            id="extension"
+            value={selectedChord.extension}
+            onChange={handleExtensionSelect}
+            className="px-2 py-1 border border-gray-400 rounded-md"
+          >
+            <option value=""></option>
+            {extensions.map((extension) => (
+              <option key={extension} value={extension}>
+                {extension}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
     </div>
   );
 };

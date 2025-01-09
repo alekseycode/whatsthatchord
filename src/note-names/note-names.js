@@ -28,3 +28,40 @@ export const notes = [
     BlackNote: "",
   },
 ];
+
+export const noteNames = [
+  "A",
+  "As",
+  "B",
+  "C",
+  "Cs",
+  "D",
+  "Ds",
+  "E",
+  "F",
+  "Fs",
+  "G",
+  "Gs",
+];
+
+export const chordTypes = [
+  "Major",
+  "Minor",
+  "Diminished",
+  "Augmented",
+  "Suspended",
+  "Dominant",
+];
+
+export const extensions = [
+  "7",
+  "9",
+  "11",
+  "13",
+  "6",
+  "add9",
+  "sharp9",
+  "flat9",
+  "sharp11",
+  "flat13",
+];

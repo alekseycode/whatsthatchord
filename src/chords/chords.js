@@ -114,8 +114,6 @@ const checkForInversion = (notes) => {
     .map((note) => ({ [note]: noteToNumber[note] }))
     .sort((a, b) => Object.values(a)[0] - Object.values(b)[0]);
 
-  console.log("Note Objects: ", noteObjects);
-
   // [{"E3": 4}, {"G3": 7}, {"C4": 12}]
 
   function subtractOctaves(array) {
@@ -127,8 +125,6 @@ const checkForInversion = (notes) => {
   }
 
   const subtractedNoteObjects = subtractOctaves(noteObjects);
-
-  console.log("Subtracted Octaves: ", subtractedNoteObjects);
 
   function removeDuplicatesByValue(array) {
     const uniqueValues = new Set();
@@ -147,8 +143,6 @@ const checkForInversion = (notes) => {
 
   let uniqueNoteObjects = removeDuplicatesByValue(subtractedNoteObjects);
 
-  console.log("Unique notes: ", uniqueNoteObjects);
-
   // [{"E3": 4}, {"G3": 7}, {"C4": 0}]
 
   function shiftArray(arr) {
@@ -165,8 +159,6 @@ const checkForInversion = (notes) => {
     let rootValue = Object.values(uniqueNoteObjects[0])[0];
 
     let intervals = getIntervals(rootValue, uniqueNoteObjects);
-    console.log("Loop #: ", i);
-    console.log("Intervals: ", intervals);
 
     for (const [chordName, chordPattern] of Object.entries(chordTypes)) {
       if (JSON.stringify(intervals) === JSON.stringify(chordPattern)) {
