@@ -54,11 +54,11 @@ export const chordTypes = [
 ];
 
 export const extensions = [
+  "6",
   "7",
   "9",
   "11",
   "13",
-  "6",
   "add9",
   "sharp9",
   "flat9",

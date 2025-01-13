@@ -163,10 +163,10 @@ const checkForInversion = (notes) => {
     for (const [chordName, chordPattern] of Object.entries(chordTypes)) {
       if (JSON.stringify(intervals) === JSON.stringify(chordPattern)) {
         const inversion = i === 1 ? "1st inversion" : `${i}nd inversion`;
-        return `${Object.keys(uniqueNoteObjects[0])[0].replace(
-          /\d+$/,
-          ""
-        )}${chordName} (${inversion})`;
+
+        return `${Object.keys(uniqueNoteObjects[0])[0]
+          .replace(/\d+$/, "")
+          .replace("s", "#")}${chordName} (${inversion})`;
       }
     }
   }
